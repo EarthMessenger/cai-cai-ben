@@ -40,7 +40,7 @@ export default function GameInterface({ initialBenben }: { initialBenben: z.infe
   return (
     <>
       <p>{benben.content}</p>
-      <p>猜測作者名字顏色</p>
+      <p>猜测作者名字颜色</p>
       <form onSubmit={handleSubmit}>
         {
           allColor.map((c) => (
@@ -52,19 +52,19 @@ export default function GameInterface({ initialBenben }: { initialBenben: z.infe
             </div>
           ))
         }
-        <button type="submit">確認</button>
+        <button type="submit">确认</button>
       </form>
 
       {answer !== "" && 
         <>
         <p>
-          你的答案：{answer}，正確答案：{benben.user.color}。
+          你的答案：{answer}，正确答案：{benben.user.color}。
         </p>
-        <button onClick={nextBenben}>下一題</button>
+        <button onClick={nextBenben}>下一题</button>
         </>
       }
 
-      <p>準確度：{accuracy}%</p>
+      <p>准确度：{accuracy}%</p>
     </>
   );
 }
