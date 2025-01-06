@@ -8,7 +8,7 @@ const randomChoice = <T>(a: Array<T>) => {
 import { LuoguBenbenApiSchema } from "./type";
 
 export const getRandomBenben = async () => {
-  const randomPage = Math.floor(Math.random() * 1e5);
+  const randomPage = Math.floor(Math.random() * 1e4);
   const randomBenben = await fetch(`${LUOGU_API}/feed/list?page=${randomPage}`)
     .then((res) => res.json())
     .then((res) => LuoguBenbenApiSchema.parseAsync(res))

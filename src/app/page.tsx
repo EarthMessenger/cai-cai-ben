@@ -1,4 +1,4 @@
-"use server";
+export const dynamic = "force-dynamic";
 
 import GameInterface from "./GameInterface";
 import { getRandomBenben } from "./getBenben";
