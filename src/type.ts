@@ -1,10 +1,11 @@
 import { z } from "zod";
+import { luoguColors } from "@/luogu";
 
 export const UserSchema = z.object({
   uid: z.number().int().nonnegative(),
   name: z.string(),
   avatar: z.string().url(),
-  color: z.string(),
+  color: z.enum(luoguColors),
 });
 
 export const BenbenSchema = z.object({

@@ -1,23 +1,16 @@
 "use client";
 
 import { FormEventHandler, startTransition, useActionState, useState } from "react";
-import { BenbenSchema } from "./type";
+import { BenbenSchema } from "../type";
 import { getRandomBenben } from "./getBenben";
 import { z } from "zod";
-
-const allColor = [
-  "Gray",
-  "Blue",
-  "Green",
-  "Orange",
-  "Red",
-  "Cheater",
-];
+import { LuoguNameColor } from "@/components/LuoguNameColor";
+import { LuoguColors, luoguColors } from "@/luogu";
 
 export default function GameInterface({ initialBenben }: { initialBenben: z.infer<typeof BenbenSchema>; }) {
   // const [benben, setBenben] = useState(initialBenben);
   const [score, setScore] = useState({ correct: 0, total: 0 });
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState<LuoguColors | null>(null);
   const [benben, nextBenbenAction, isPendingBenben] = useActionState(async () => {
     return await getRandomBenben();
   }, initialBenben);
@@ -30,7 +23,7 @@ export default function GameInterface({ initialBenben }: { initialBenben: z.infe
     const form = e.target as HTMLFormElement;
     const data = new FormData(form);
 
-    const currentAnswer = data.get("answer") as string;
+    const currentAnswer = data.get("answer") as LuoguColors;
     setAnswer(currentAnswer);
     setScore({ correct: score.correct + (currentAnswer === benben.user.color ? 1 : 0), total: score.total + 1 });
   };
@@ -44,29 +37,29 @@ export default function GameInterface({ initialBenben }: { initialBenben: z.infe
               <p>{benben.content}</p>
               <form onSubmit={handleSubmit}>
                 {
-                  allColor.map((c) => (
+                  luoguColors.map((c) => (
                     <div key={c}>
                       <label>
-                        <input type='radio' name="answer" value={c} disabled={answer !== ""}></input>
-                        {c}
+                        <input type='radio' name="answer" value={c}></input>
+                        <LuoguNameColor color={c}>{c}</LuoguNameColor>
                       </label>
                     </div>
                   ))
                 }
-                <button type="submit">确认</button>
+                <button type="submit" disabled={answer !== null}>确认</button>
               </form>
             </>
           )
         }
       </div>
 
-      {answer !== "" &&
+      {answer !== null &&
         <>
           <p>
-            你的答案：{answer}，正确答案：{benben.user.color}。
+            你的答案：<LuoguNameColor color={answer}>{answer}</LuoguNameColor>，正确答案：<LuoguNameColor color={benben.user.color}>{benben.user.color}</LuoguNameColor>。
           </p>
           <button onClick={() => {
-            setAnswer("");
+            setAnswer(null);
             startTransition(() => {
               nextBenbenAction()
             });

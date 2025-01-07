@@ -5,7 +5,7 @@ const randomChoice = <T>(a: Array<T>) => {
   return a[Math.floor(Math.random() * a.length)];
 };
 
-import { LuoguBenbenApiSchema } from "./type";
+import { LuoguBenbenApiSchema } from "../type";
 
 export const getRandomBenben = async () => {
   const randomPage = Math.floor(Math.random() * 1e4);
