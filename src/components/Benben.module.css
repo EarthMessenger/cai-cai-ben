@@ -1,0 +1,28 @@
+.feedContainer {
+  display: flex;
+  flex-direction: row;
+  border: #999 1px solid;
+  border-radius: 5px;
+  padding: 0.5em;
+}
+
+.blur {
+  filter: blur(6px);
+  user-select: none;
+}
+
+.avatar {
+  width: 72px;
+  margin-right: .75em;
+  object-fit: contain;
+}
+
+.feedMain {
+  display: flex;
+  flex-direction: column;
+}
+
+.feedTime {
+  margin-left: .5em;
+  color: #999;
+}

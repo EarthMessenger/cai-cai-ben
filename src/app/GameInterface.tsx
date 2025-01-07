@@ -33,7 +33,7 @@ export default function GameInterface({ initialBenben }: { initialBenben: Benben
         {
           isPendingBenben ? <p>加载中……</p> : (
             <>
-              <Benben benben={benben}></Benben>
+              <Benben benben={benben} showDetails={answer !== null}></Benben>
               <form onSubmit={handleSubmit}>
                 {
                   luoguColors.map((c) => (
