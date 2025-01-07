@@ -1,14 +1,13 @@
 "use client";
 
 import { FormEventHandler, startTransition, useActionState, useState } from "react";
-import { BenbenSchema } from "../type";
+import { BenbenWithCompiledContent } from "../type";
 import { getRandomBenben } from "./getBenben";
-import { z } from "zod";
 import { LuoguNameColor } from "@/components/LuoguNameColor";
 import { LuoguColors, luoguColors } from "@/luogu";
+import { Benben } from "@/components/Benben";
 
-export default function GameInterface({ initialBenben }: { initialBenben: z.infer<typeof BenbenSchema>; }) {
-  // const [benben, setBenben] = useState(initialBenben);
+export default function GameInterface({ initialBenben }: { initialBenben: BenbenWithCompiledContent; }) {
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [answer, setAnswer] = useState<LuoguColors | null>(null);
   const [benben, nextBenbenAction, isPendingBenben] = useActionState(async () => {
@@ -34,7 +33,7 @@ export default function GameInterface({ initialBenben }: { initialBenben: z.infe
         {
           isPendingBenben ? <p>加载中……</p> : (
             <>
-              <p>{benben.content}</p>
+              <Benben benben={benben}></Benben>
               <form onSubmit={handleSubmit}>
                 {
                   luoguColors.map((c) => (

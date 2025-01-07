@@ -21,3 +21,4 @@ export const LuoguBenbenApiSchema = z.object({
   }),
 });
 
+export type BenbenWithCompiledContent = z.infer<typeof BenbenSchema> & {compiledContent: string};
