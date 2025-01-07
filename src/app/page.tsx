@@ -7,7 +7,11 @@ export default async function Page() {
   const initialBenben = await getRandomBenben();
 
   return (
-    <GameInterface initialBenben={initialBenben}></GameInterface>
+    <>
+      <h2>猜猜犇</h2>
+      <p>根据犇犇猜测作者名字颜色</p>
+      <GameInterface initialBenben={initialBenben}></GameInterface>
+    </>
   );
 
 }

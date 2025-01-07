@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, startTransition, useActionState, useState } from "react";
 import { BenbenSchema } from "./type";
 import { getRandomBenben } from "./getBenben";
 import { z } from "zod";
@@ -15,9 +15,12 @@ const allColor = [
 ];
 
 export default function GameInterface({ initialBenben }: { initialBenben: z.infer<typeof BenbenSchema>; }) {
-  const [benben, setBenben] = useState(initialBenben);
+  // const [benben, setBenben] = useState(initialBenben);
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [answer, setAnswer] = useState("");
+  const [benben, nextBenbenAction, isPendingBenben] = useActionState(async () => {
+    return await getRandomBenben();
+  }, initialBenben);
 
   const accuracy = score.total === 0 ? "0" : (score.correct / score.total * 100).toFixed(0);
 
@@ -29,38 +32,45 @@ export default function GameInterface({ initialBenben }: { initialBenben: z.infe
 
     const currentAnswer = data.get("answer") as string;
     setAnswer(currentAnswer);
-    setScore({correct: score.correct + (currentAnswer === benben.user.color ? 1 : 0), total: score.total + 1});
-  };
-
-  const nextBenben = async () => {
-    setAnswer("");
-    setBenben(await getRandomBenben());
+    setScore({ correct: score.correct + (currentAnswer === benben.user.color ? 1 : 0), total: score.total + 1 });
   };
 
   return (
     <>
-      <p>{benben.content}</p>
-      <p>猜测作者名字颜色</p>
-      <form onSubmit={handleSubmit}>
+      <div>
         {
-          allColor.map((c) => (
-            <div key={c}>
-              <label>
-                <input type='radio' name="answer" value={c} disabled={answer !== ""}></input>
-                {c}
-              </label>
-            </div>
-          ))
+          isPendingBenben ? <p>加载中……</p> : (
+            <>
+              <p>{benben.content}</p>
+              <form onSubmit={handleSubmit}>
+                {
+                  allColor.map((c) => (
+                    <div key={c}>
+                      <label>
+                        <input type='radio' name="answer" value={c} disabled={answer !== ""}></input>
+                        {c}
+                      </label>
+                    </div>
+                  ))
+                }
+                <button type="submit">确认</button>
+              </form>
+            </>
+          )
         }
-        <button type="submit">确认</button>
-      </form>
+      </div>
 
-      {answer !== "" && 
+      {answer !== "" &&
         <>
-        <p>
-          你的答案：{answer}，正确答案：{benben.user.color}。
-        </p>
-        <button onClick={nextBenben}>下一题</button>
+          <p>
+            你的答案：{answer}，正确答案：{benben.user.color}。
+          </p>
+          <button onClick={() => {
+            setAnswer("");
+            startTransition(() => {
+              nextBenbenAction()
+            });
+          }}>下一题</button>
         </>
       }
 
