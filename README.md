@@ -1,36 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 猜猜犇
 
-## Getting Started
+立即体验：https://ccb.earthmessenger.xyz/
 
-First, run the development server:
+根据犇犇猜测作者名字颜色。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+灵感来源：[Guess the true rating of these users!](https://codeforces.com/blog/entry/137983)。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+没有什么反作弊机制，所有数据都被发送到了前端，判断打分逻辑也是在前端执行的。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+使用洛谷官方 api 获取犇犇，随机最近 $2\times 10^5$ 条犇犇中的一条。洛谷官方 api 很慢，目前的获取策略是预存两条犇犇备用，如果做题过快可能会需要等待加载。
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Markdown 使用 unified 渲染，暂不支持洛谷的 bilibili 视频。
