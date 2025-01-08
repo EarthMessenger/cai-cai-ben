@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
+import { getRandomBenben } from "@/app/api/getRandomBenben/details";
 import GameInterface from "./GameInterface";
-import { getRandomBenben } from "./getBenben";
 import css from "./style.module.css"
 
 export default async function Page() {

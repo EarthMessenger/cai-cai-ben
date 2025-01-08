@@ -1,11 +1,10 @@
-"use server";
-
 const { LUOGU_API, LUOGU_COM_CN } = process.env;
+
 const randomChoice = <T>(a: Array<T>) => {
   return a[Math.floor(Math.random() * a.length)];
 };
 
-import { BenbenWithCompiledContent, LuoguBenbenApiSchema } from "../type";
+import { LuoguBenbenApiSchema } from "@/type";
 
 import rehypeSanitize from "rehype-sanitize";
 import rehypeStringify from "rehype-stringify";
@@ -21,8 +20,8 @@ const processor = unified()
   .use(rehypeSanitize)
   .use(rehypeStringify);
 
-export const getRandomBenben = async (): Promise<BenbenWithCompiledContent> => {
-  const randomPage = Math.floor(Math.random() * 1e4);
+export const getRandomBenben = async () => {
+  const randomPage = Math.floor(Math.random() * 1e4); 
   const randomBenben = await fetch(`${LUOGU_API}/feed/list?page=${randomPage}`)
     .then((res) => res.json())
     .then((res) => LuoguBenbenApiSchema.parseAsync(res))
@@ -33,4 +32,4 @@ export const getRandomBenben = async (): Promise<BenbenWithCompiledContent> => {
     }));
 
   return randomBenben;
-};
+}

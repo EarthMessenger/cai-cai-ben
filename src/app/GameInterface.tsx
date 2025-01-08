@@ -1,8 +1,7 @@
 "use client";
 
 import { FormEventHandler, useEffect, useState } from "react";
-import { BenbenWithCompiledContent } from "../type";
-import { getRandomBenben } from "./getBenben";
+import { BenbenWithCompiledContent } from "@/type";
 import { LuoguNameColor } from "@/components/LuoguNameColor";
 import { LuoguColors, luoguColors } from "@/luogu";
 import { Benben } from "@/components/Benben";
@@ -11,7 +10,6 @@ const usePrefetchedAction = <T,>(initialData: T | null, action: () => Promise<T>
   const [candidate, setCandidate] = useState<T[]>(initialData !== null ? [initialData] : []);
   const [unsolved, setUnsolved] = useState(0);
 
-  // I don't know why Next.js server actions cannot be parallelized.
   useEffect(() => {
     if (candidate.length + unsolved < candidateSize) {
       setUnsolved(unsolved => unsolved + 1);
@@ -37,7 +35,9 @@ const usePrefetchedAction = <T,>(initialData: T | null, action: () => Promise<T>
 const GameMain = ({ initialBenben, updateScore }: { initialBenben: BenbenWithCompiledContent, updateScore: (correct: boolean) => void }) => {
   const [answer, setAnswer] = useState<LuoguColors | null>(null);
   const [confirmed, setConfirmed] = useState(false);
-  const [benben, nextBenben] = usePrefetchedAction(initialBenben, getRandomBenben);
+  const [benben, nextBenben] = usePrefetchedAction(initialBenben, () => {
+    return fetch("/api/getRandomBenben").then((res) => res.json());
+  });
 
   if (benben === null) {
     return (

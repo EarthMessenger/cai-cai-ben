@@ -13,9 +13,9 @@ export const luoguColorsCss: Record<LuoguColors, string> = {
   Cheater: css.cheater,
 }
 
-export const LuoguNameColor = ({ color, children }: { color: LuoguColors, children: React.ReactNode }) => {
+export const LuoguNameColor = ({ color, children, className }: { color: LuoguColors | null, children: React.ReactNode, className?: string | undefined }) => {
   return (
-    <span className={clsx(luoguColorsCss[color], css.name)}>
+    <span className={clsx(color !== null && luoguColorsCss[color], css.name, className)}>
       {children}
     </span>
   );
