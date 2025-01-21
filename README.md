@@ -1,3 +1,5 @@
+Archived: 洛谷官方 api 修复了可以看全网犇犇的 bug。这个项目就用不了了。
+
 ## 猜猜犇
 
 立即体验：https://ccb.earthmessenger.xyz/
